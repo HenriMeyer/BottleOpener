@@ -1,6 +1,5 @@
 #include <avr/sleep.h>
 #include <avr/interrupt.h>
-#include <avr/wdt.h>
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "Display.h"
@@ -14,10 +13,9 @@
 Display display;
 volatile bool increaseFlag = false;
 volatile bool decreaseFlag = false;
-volatile bool watchdogFlag = false;
 volatile bool displayFlag = false;
 uint16_t count;
-uint16_t timer;
+unsigned long timer;
 uint16_t currentEEPROMAdress;
 const uint16_t MAX_EEPROM_ADDRESS = E2END - sizeof(count) + 1;
 
@@ -39,6 +37,8 @@ void goToSleep() {
     sei();
     sleep_cpu();
     sleep_disable();
+
+    timer = millis();
     display.initialize(DISPLAY_VCC);
 }
 
@@ -79,7 +79,7 @@ void loop() {
         displayFlag = true;
         count++;
         EEPROM.put(currentEEPROMAdress, count);
-        display.clear();
+        // display.clear();
         display.write(count);
         timer = millis();
         delay(200);
@@ -91,7 +91,7 @@ void loop() {
         if (count > 0){
             count--;
             EEPROM.put(currentEEPROMAdress, count);
-            display.clear();
+            // display.clear();
             display.write(count);
         }
         timer = millis();
