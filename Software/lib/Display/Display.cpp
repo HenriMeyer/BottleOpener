@@ -65,23 +65,3 @@ void Display::end() {
     pinMode(this->DisplayVCC, OUTPUT);
     digitalWrite(this->DisplayVCC, LOW);
 }
-
-// void Display::drawFrame1() {
-//     // oled.switchRenderFrame();  // Wechsle zum Render Frame 2
-//     // oled.clear();
-//     // oled.setCursor(0, 0);
-//     // oled.print(F("Frame 1"));
-//     oled.switchRenderFrame();  // Wechsle zum Render Frame 1
-//     oled.clear();
-// }
-
-// void Display::drawFrame2() {
-//     oled.switchRenderFrame();  // Wechsle zum Render Frame 2
-//     oled.clear();
-//     oled.setCursor(0, 0);
-//     oled.print(F("Frame 2"));
-// }
-
-// void Display::switchFrames() {
-//     oled.switchDisplayFrame();  // Umschalten zwischen Display-Frames
-// }

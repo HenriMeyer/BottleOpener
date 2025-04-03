@@ -13,9 +13,6 @@ private:
     uint8_t DisplayVCC;
 public:
     void initialize(uint8_t DisplayVCC);
-    // void drawFrame1();
-    // void drawFrame2();
-    // void switchFrames();
     void drawLines();
     void write(uint16_t data);
     void write(const char* data);
