@@ -68,7 +68,7 @@ subprocess.run([
 print(f"{GREEN}Arduino is now ready as ISP!{RESET}", flush=True)
 
 # --- Bootloader for ATtiny85 ---
-print(f"{'='*41} {YELLOW}Writing bootloader to ATtiny85{RESET} {'='*41}", flush=True)
+print(f"{'='*41} {YELLOW}Clear flash of ATtiny85{RESET} {'='*41}", flush=True)
 
 subprocess.run([
     f"{AVRDUDE_PATH}/avrdude.exe",
@@ -80,11 +80,11 @@ subprocess.run([
     "-e",
     "-U", "efuse:w:0xFF:m",
     "-U", "hfuse:w:0b11010111:m",
-    "-U", "lfuse:w:0xE2:m",
-    "-U", "flash:w:C:/Privat/ProgrammierenProjekte/BottleOpener/Software/tools/bootloader.hex:i"
+    "-U", "lfuse:w:0x42:m",
+    "-U", "flash:w:C:/Privat/ProgrammierenProjekte/BottleOpener/Software/tools/empty_all.hex:i"
 ], check=True)
 
-print(f"{GREEN}Bootloader flashed successfully!{RESET}", flush=True)
+print(f"{GREEN}Cleared flash successfully!{RESET}", flush=True)
 
 # --- Flash firmware ---
 print(f"{'='*43} {YELLOW}Flashing ATtiny85 firmware{RESET} {'='*43}", flush=True)
