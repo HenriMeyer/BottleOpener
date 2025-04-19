@@ -1,6 +1,7 @@
 HT7550 -> LDO
 Attiny85 20PU -> Controller
 CR2032 x 2 -> Battery
+Battery holder -> https://www.reichelt.de/de/de/shop/produkt/knopfzellenhalter_fuer_20_mm-44621 (Datasheet: https://cdn-reichelt.de/documents/datenblatt/D500/KZH20-1.pdf)
 oled 0.91 -> Display (https://www.amazon.de/dp/B0D2L1ZDWP?ref=ppx_yo2ov_dt_b_fed_asin_title)
 NC Button -> https://www.reichelt.de/de/de/shop/produkt/taster_5e_multimec_-_tht_nc_no-178327
 Metal for contact
