@@ -12,7 +12,7 @@ RESET = "\033[0m"
 # --- Check CLI args ---
 if len(sys.argv) < 3:
     print(f"{RED}Error: You must pass the path to avrdude and .hex-file as an argument.{RESET}")
-    print(f"    Example: python flash.py \"C:/avrdude\" \"C:\Privat\ProgrammierenProjekte\BottleOpener\Software\.pio\build\ATtiny85_ISP\firmware.hex\"")
+    print(f"    Example: python flash.py \"C:\avrdude\" \"C:\Privat\ProgrammierenProjekte\BottleOpener\Software\.pio\build\ATtiny85_ISP\firmware.hex\"")
     exit(1)
 
 AVRDUDE_PATH = sys.argv[1].replace("\\", "/")
