@@ -1,0 +1,97 @@
+/**
+ * NUM2STR - Functions to handle the conversion of numeric vales to strings.
+ *
+ * @author	Neven Boyanov
+ *
+ * This is part of the Tinusaur/TinyAVRLib project.
+ *
+ * Copyright (c) 2017 Neven Boyanov, The Tinusaur Team. All Rights Reserved.
+ * Distributed as open source software under MIT License, see LICENSE.txt file.
+ * Retain in your source code the link http://tinusaur.org to the Tinusaur project.
+ *
+ * Source code available at: https://bitbucket.org/tinusaur/tinyavrlib
+ *
+ */
+
+// ============================================================================
+
+#include "num2str.h"
+
+// ----------------------------------------------------------------------------
+//  NOTE: The resulting ASCII text should not be terminated with '\0' in the 
+//        functions below because the buffer might be part of a larger text.
+// ----------------------------------------------------------------------------
+
+uint8_t usint2decascii(uint16_t num, char *buffer) {
+	const unsigned short powers[] = { 10000u, 1000u, 100u, 10u, 1u }; // The "const unsigned short" combination gives shortest code.
+	char digit; // "digit" is stored in a char array, so it should be of type char.
+	uint8_t digits = USINT2DECASCII_MAX_DIGITS - 1;
+	for (uint8_t pos = 0; pos < 5; pos++) { // "pos" is index in array.
+		digit = 0;
+		while (num >= powers[pos]) {
+			digit++;
+			num -= powers[pos];
+		}
+		// Fixed width, space (or anything else) padded result, digits offset.
+		// Note: Determines the offset of the first significant digit.
+		// Note: Could be used for variable width, not padded, left aligned result.
+		if (digits == USINT2DECASCII_MAX_DIGITS - 1) {
+			if (digit == 0) {
+				if (pos < USINT2DECASCII_MAX_DIGITS - 1)	// Check position, so single "0" will be handled properly.
+					digit = -16;	// Use: "-16" for space (' '), "-3" for dash/minus ('-'), "0" for zero ('0'), etc. ...
+			} else {
+				digits = pos;
+			}
+		}
+		buffer[pos] = digit + '0';	// Convert to ASCII
+
+	}
+	return digits;
+}
+
+// ----------------------------------------------------------------------------
+
+uint8_t usint2hexascii(uint16_t num, char *buffer) {
+	for (int8_t pos = USINT2HEXASCII_MAX_DIGITS - 1; pos >= 0 ; pos--) { // "pos" is index in an array.
+		char digit = num & 0x000f;
+		if (digit <= 9) {
+			buffer[pos] = digit + '0';	// Convert to ASCII
+		} else {
+			buffer[pos] = digit + 'A' - 10;	// Convert to ASCII
+		}
+		num = num >> 4;
+	}
+	return 4;
+}
+
+// ----------------------------------------------------------------------------
+// NOTE: The buffer should be always at least MAX_DIGITS in length - the function works with 16-bit numbers.
+
+uint8_t usint2binascii(uint16_t num, char *buffer) {
+	uint16_t power = 0x8000;	// This is the 1000 0000 0000 0000 binary number.
+	char digit; // "digit" is stored in a char array, so it should be of type char.
+	uint8_t digits = USINT2BINASCII_MAX_DIGITS - 1;
+	for (uint8_t pos = 0; pos < USINT2BINASCII_MAX_DIGITS; pos++) { // "pos" is index in an array.
+		digit = 0;
+		if (num >= power) {
+			digit++;
+			num -= power;
+		}
+		// Fixed width, space ('0', or anything else) padded result, digits offset.
+		// Note: Determines the offset of the first significant digit.
+		// Note: Could be used for variable width, not padded, left aligned result.
+		if (digits == USINT2BINASCII_MAX_DIGITS - 1) {
+			if (digit == 0) {
+				if (pos < USINT2BINASCII_MAX_DIGITS - 1) // Check position, so single "0" will be handled properly.
+					digit = 0; // Use: "-16" for space (' '), "-3" for dash/minus ('-'), "0" for zero ('0'), etc.
+			} else {
+				digits = pos;
+			}
+		}
+		buffer[pos] = digit + '0';	// Convert to ASCII
+		power = power >> 1;
+	}
+	return digits;
+}
+
+// ============================================================================

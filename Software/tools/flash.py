@@ -78,9 +78,10 @@ subprocess.run([
     "-P", ComPort,
     "-b", "19200",
     "-e",
+    # "-v",
     "-U", "efuse:w:0xFF:m",
     "-U", "hfuse:w:0b11010111:m",
-    "-U", "lfuse:w:0x42:m",
+    "-U", "lfuse:w:0xC2:m", # 0x42 = 0b01000010, 1MHz internal clock -> 0xC2 = 0b11000010, 8MHz internal clock
     "-U", "flash:w:C:/Privat/ProgrammierenProjekte/BottleOpener/Software/tools/empty_all.hex:i"
 ], check=True)
 
@@ -95,7 +96,7 @@ subprocess.run([
     "-p", "attiny85",
     "-c", "stk500v1",
     "-P", ComPort,
-    "-b", "19200",
+    "-b", "19600",
     "-U", f"flash:w:{SOURCE}:i"
 ], check=True)
 
